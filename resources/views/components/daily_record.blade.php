@@ -16,15 +16,15 @@
         <span class="breadcrumb">
             <span class="breadcrumb-info">
                 <span>Food consumed <span class="tag"> {{$total_food}}</span> </span>
-                <span>Calories Consumed <span class="tag">{{$total_calories}}</span> </span> 
-                <span>Target Calories <span class="tag">{{$target_calories}}</span>  </span>
+                <span>Consumed <i class="icon icon-spoon-knife"></i> <span class="tag">{{$total_calories}} cal</span> </span> 
+                <span>Target<i class="icon icon-target"></i> <span class="tag">{{$target_calories}} cal</span>  </span>
             </span>
             <span class="breadcrumb-actions">
                 <span>
                     <a href="{{route('show.paginated.food.record')}}"><i class="icon icon-fire"></i>&nbsp;Entire Record</a>
                 </span>
                 <span class="breadcrumb-actions-icon-primary">
-                    <a href="{{route('show.food.form')}}"><i class="icon icon-box-add"></i>&nbsp;Add More</a>
+                    <a href="{{route('show.food.form')}}">Add More</a>
                 </span>
             </span>
         </span>
