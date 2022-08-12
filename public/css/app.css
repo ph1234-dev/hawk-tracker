@@ -34,7 +34,7 @@
     
     --table-border: var(--border);
     --table-data-padding: 5px;
-    --table-margin: var(--padding-top-halfed)  ;
+    --table-margin: var(--padding-top-halfed) 0 ;
     /* --table-head-background-color: green; */ 
 
     --accent-color: rgb(255, 229, 164);
