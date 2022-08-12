@@ -1,0 +1,109 @@
+
+
+@media screen and (min-width: 426px) {
+    .navbar{
+        grid-template-areas: "left right";
+        width: 100%;
+        max-width: calc(960px + var(--padding-left)*2 );
+        margin: auto !important;
+    }
+    
+    .navbar .navbar-link{
+        /* padding:  var(--padding-top) 0px; */
+        /* padding: var(--padding);  */
+        padding: var(--padding-top) 0;
+    }
+
+    /* .navbar .navbar-link:first-child{
+        padding-left: 0px;
+    } */
+
+    .navbar .navbar-left{
+        gap: var(--padding-left);
+    }
+    
+    .navbar .navbar-right{
+        gap: var(--padding-left);
+        margin-left: auto;
+    }
+
+    .form input[type="submit"]{
+        width: fit-content;
+    }
+
+    .component-container {
+        max-width: 960px;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        gap: var(--gap);
+    }
+
+
+    .footer{
+        flex-direction: row;
+        padding: 2rem 0;
+        margin: auto;
+        max-width: 960px;
+        height: 100%;
+    }
+
+    .root-content{
+        min-height: 50vh;
+    }
+
+     /* breadcrumb - start */
+     .breadcrumb{
+        display: grid;
+        flex-direction: row;
+        gap: var(--padding-left);
+        grid-template-areas: "info actions";
+        grid-template-columns: 1fr auto;
+        /* background-color: indianred; */
+    }
+
+    .breadcrumb > .breadcrumb-info{
+        grid-area: info;
+        display: flex;
+        flex-direction: row;
+        gap: var(--padding-left);
+    }
+
+    .breadcrumb > .breadcrumb-actions{
+        grid-area: actions;
+        display: flex;
+        flex-direction: row;
+        gap: var(--padding-left);
+        margin-left: auto;
+    }
+
+    .breadcrumb > .breadcrumb-actions >*{
+        background-color: var(--background-color-white);
+        padding: var(--padding-top-halfed) var(--padding-left-halfed);
+        border-radius: var(--border-radius);
+        font-size: small;
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .breadcrumb  > .breadcrumb-actions >.breadcrumb-actions-icon-primary{
+        background-color: var(--primary-color);
+    }
+    
+    /* breadcrumb - end */
+}
+
+
+@media screen and (min-width:321px) {
+    
+    .form{
+        max-width: 360px;
+    } 
+
+    .navbar{
+        margin: 0 var(--padding-left);
+    }
+
+  
+
+}
