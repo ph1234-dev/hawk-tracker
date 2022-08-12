@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
+
 class ApplicationDataController extends Controller
 {
     //
     public function init(Request $request){
         $user_id = $request->session()->get("user_id");
-
-
-        // $records = DB::select("select id, food, calories, pieces, comment,date from food_records 
-        //     where user_id =? and date=CURDATE()",[$user_id]);
-        // $records = var_dump($records);
+        $date = Carbon::now()->format('F d, Y');
 
         $food_record_result_set_summary = DB::select(
                         "select 
@@ -24,16 +22,10 @@ class ApplicationDataController extends Controller
         
         $user_account_info = DB::select("select target_calories from accounts where id=?",[$user_id]);
 
-        // dd or var_dump
         // to show data
         $food_record_info = $food_record_result_set_summary[0];
-        // $calorie_decoded = var_dump($calories);
 
         $user_info = $user_account_info[0];
-
-        // $records = DB::table("food_records")
-        //     ->where('user_id',$user_id)
-        //     ->whereRaw('date = current_date')->get();
 
         $records = DB::select(
             "
@@ -54,12 +46,11 @@ class ApplicationDataController extends Controller
         // dd($records);
 
         return view("index",[
-            'data' => 'testing',
+            'date' => $date,
             'records' => $records,
             'total_calories' => number_format($food_record_info->total_calories),
             'total_food' =>number_format( $food_record_info->total_food),
             'target_calories' => number_format($user_info->target_calories),
-            'status' => $status
         ]);
 
     }
