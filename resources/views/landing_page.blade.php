@@ -1,7 +1,8 @@
 @extends('template')
 @section('content')
     <div class="text-giant-panel">
-        <span style="align-self: center;font-size: 10rem" class="icon-hawk text-giant"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
+        {{-- <span style="align-self: center;font-size: 10rem" class="icon-hawk text-giant"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span> --}}
+        <span class="icon-hawk" style="align-self: center;font-size: 10rem" ><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span><span class="path20"></span><span class="path21"></span></span>
         <div class="text-giant-title">Change starts with you</div>
         <div class="text-giant-subtitle">Start doing things you can do today!</div>
         <button id="landing-page-main-button" class="text-giant-button button-primary">Start</button>
