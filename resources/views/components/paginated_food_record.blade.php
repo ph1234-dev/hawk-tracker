@@ -12,9 +12,10 @@
             <span>Target Calories <span class="tag">{{$target_calories}}</span>  </span>
         </span>
         <span class="breadcrumb-actions">
-            <span>
+            <input id="input-date-week-identifier" type="date"  value="<?php echo date("Y-m-d"); ?>">
+            {{-- <span>
                 <a href="{{route('show.food.form')}}"><i class="icon icon-fire"></i>&nbsp;Go Home</a>
-            </span>
+            </span> --}}
             <span class="breadcrumb-actions-icon-primary">
                 <a href="{{route('show.food.form')}}"><i class="icon icon-box-add"></i>&nbsp;Add More</a>
             </span>
