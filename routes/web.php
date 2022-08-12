@@ -151,4 +151,9 @@ Route::get('delete_food/{data}',[FoodController::class,'delete'])->name('delete.
 Route::prefix('report')->group(function(){
     Route::get('/',[FoodController::class,'show_weekly_record'])->name('show.weekly.report');
     Route::get('/date={date}',[FoodController::class,'show_weekly_record_specific_date'])->name('show.weekly.report.specific');
+
+    Route::get('/daily-record={date}',[
+            FoodController::class,
+            'show_daily_specific_record'
+        ])->name('show.daily.specific.record');
 });
