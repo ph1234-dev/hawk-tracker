@@ -7,7 +7,7 @@
     <span class="text-title">Weekly Record</span>
     <span class="breadcrumb">
         <span class="breadcrumb-info">
-            <span>Food consumed </span>
+            <span>Summary of your weekly records</span>
         </span>
         <span class="breadcrumb-actions">
             <input type="date">
