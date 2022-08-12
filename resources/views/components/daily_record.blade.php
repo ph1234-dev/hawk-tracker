@@ -10,7 +10,7 @@
 
         <section>
             <span class="text-title">Daily Record</span>
-            <p>Heres what you have taken so far.</p>
+            <p>Heres what you have taken today <strong> {{$date}}</strong> so far</p>
         </section> 
 
         <span class="breadcrumb">
@@ -36,7 +36,7 @@
                     <th>Calorie </th>
                     <th>Pieces</th>
                     <th>Comments</th>
-                    <th>Date</th>
+                    {{-- <th>Date</th> --}}
                     <th>Options</th>
                 </tr>
             </thead>
@@ -47,7 +47,7 @@
                         <td>{{number_format($data->calories)}}</td>
                         <td>{{$data->pieces}}</td>
                         <td>{{$data->comment}}</td>
-                        <td >{{$data->date}}</td>
+                        {{-- <td >{{$data->date}}</td> --}}
                         <td style="display: flex; gap: var(--padding-left);">
                             <a class="" href="{{route('delete.stored.food',$data->id)}}">
                                 <i class="icon icon-bin"></i>
