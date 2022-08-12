@@ -173,7 +173,7 @@ class FoodController extends Controller
                 inner join accounts a
                 on f.user_id=a.id
                 where a.id=?
-                group by week,a.username,f.user_id",                   
+                group by week,a.username,f.user_id order by week desc",                   
                     [$user_id]);
         
 
