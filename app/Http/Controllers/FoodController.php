@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class FoodController extends Controller
 {
@@ -55,15 +56,48 @@ class FoodController extends Controller
         ]);
     }
 
-    // public function show(Request $request){
-    //     $result = DB::select(
-    //         "select food, calories, comment, date, 
-    //         pieces from food_record limit ?", [$this->increment]);
-    //     // ->starting_index
-    //     $result = DB::table("food_record")->paginate(5);
-    //     // return view("record",['record'=>$result]);
-    //     return view("record",['record'=>$result]);
-    // }
+   
+    // this shows the daily recods selected through the 
+    // date picker
+    public function show_daily_specific_record(Request $request, $date){
+      
+        $user_id = $request->session()->get("user_id");
+
+        $food_record_result_set_summary = DB::select(
+                        "select 
+                        sum(f.calories) as total_calories ,
+                        count(f.food) as total_food
+                        from food_records f where f.user_id=? and f.date::date=?" ,
+                        [$user_id,$date]);
+        
+        $user_account_info = DB::select("select target_calories from accounts where id=?",[$user_id]);
+
+        // dd or var_dump
+        // to show data
+        $food_record_info = $food_record_result_set_summary[0];
+        
+        $user_info = $user_account_info[0];
+
+
+        $records = DB::select(
+            "
+                select * 
+                from food_records 
+                where user_id=? 
+                and date::date=?
+                order by date desc
+            ",[$user_id,$date]);
+
+        // dd(Carbon::parse($date)->format('d F y'));
+        return view("food/show_date_selected_records",[
+            'records' => $records,
+            'total_calories' => number_format($food_record_info->total_calories),
+            'total_food' =>number_format( $food_record_info->total_food),
+            'target_calories' => number_format($user_info->target_calories),
+            'date' => Carbon::parse($date)->format('F d, Y')
+        ]);
+    }
+
 
     public function delete($data){
 
