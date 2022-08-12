@@ -41,6 +41,7 @@ class ApplicationDataController extends Controller
                 from food_records 
                 where user_id=? 
                 and date::date=now()::date
+                order by date desc
             ",[$user_id]);
         
         $status = "good";
