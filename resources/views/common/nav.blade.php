@@ -1,8 +1,9 @@
-<div class="parent-container" >
+<div class="navbar-container" >
     <nav class="navbar">
         <ul class="navbar-left">
             @if(session()->has('user'))
                 <li class="navbar-link" > 
+                    <span class="icon icon-hawk"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
                     <a href="{{route('home')}}" > 
                         Home
                     </a>
@@ -33,11 +34,10 @@
         </ul>
         <ul class="navbar-right">
             @if(session()->has('user'))
-                <li class="navbar-link"><span>{{session("user")}}</span></li>
+                <li class="navbar-link"><span>Hello {{session("user")}}!</span></li>
                 <li class="navbar-link">
                     <a href="{{route('retrieve.account')}}">
-                        <i class="icon icon-cog"></i>
-                        Update
+                        Profile
                     </a>
                 </li>
                 {{-- <li class="navbar-link"><a href="{{route('retrieve.account')}}"><i class="icon-pencil"></i>&nbsp;Update</a></li> --}}
