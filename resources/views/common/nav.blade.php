@@ -4,24 +4,22 @@
             @if(session()->has('user'))
                 <li class="navbar-link" > 
                     <a href="{{route('home')}}" > 
-                        <i class="icon icon-home3"></i>
                         Home
                     </a>
                 </li>
                 <li class="navbar-link">
                     <a href="{{route('show.food.form')}}">
-                        <i class="icon icon-box-add"></i>
+                        Add
+                    </a>
+                </li>
+                <li class="navbar-link">
+                    <a href="{{route('show.paginated.food.record')}}">
                         Record
                     </a>
                 </li>
                 <li class="navbar-link">
                     <a href="{{route('show.weekly.report')}}">
-                        <i class="icon icon-table"></i>Weekly Report
-                    </a>
-                </li>
-                <li class="navbar-link">
-                    <a href="{{route('show.paginated.food.record')}}">
-                        <i class="icon icon-fire"></i>Show Entire Record
+                        Report
                     </a>
                 </li>
             @else
