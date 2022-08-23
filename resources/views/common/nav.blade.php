@@ -1,66 +1,30 @@
-<div class="navbar-container" >
-    <nav class="navbar">
-        <ul class="navbar-left">
-            @if(session()->has('user'))
-                <li class="navbar-link" > 
-                    <span class="icon icon-hawk"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
-                    <a href="{{route('home')}}" > 
-                        Home
-                    </a>
-                </li>
-                <li class="navbar-link">
-                    <a href="{{route('show.food.form')}}">
-                        Add
-                    </a>
-                </li>
-                <li class="navbar-link">
-                    <a href="{{route('show.paginated.food.record')}}">
-                        Record
-                    </a>
-                </li>
-                <li class="navbar-link">
-                    <a href="{{route('show.weekly.report')}}">
-                        Report
-                    </a>
-                </li>
-            @else
-                <li class="navbar-link">
-                    <a  href="{{route('landing')}}"> 
-                        <span class="icon icon-hawk"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
-                        Tracker
-                    </a>
-                </li>
-            @endif
-        </ul>
-        <ul class="navbar-right">
-            @if(session()->has('user'))
-                <li class="navbar-link"><span>Hello {{session("user")}}!</span></li>
-                <li class="navbar-link">
-                    <a href="{{route('retrieve.account')}}">
-                        Profile
-                    </a>
-                </li>
-                {{-- <li class="navbar-link"><a href="{{route('retrieve.account')}}"><i class="icon-pencil"></i>&nbsp;Update</a></li> --}}
-                <li class="navbar-link">
-                    <a href="{{route('logout.user')}}">
-                        <i class="icon icon-exit"></i>
-                        Log Out
-                    </a>
-                </li>
-            @else
-                <li class="navbar-link">
-                    <a href="{{route('show.register.form')}}">
-                        <i class="icon icon-pencil"></i>
-                        Sign Up
-                    </a>
-                </li>
-                <li class="navbar-link">
-                    <a href="{{route('show.login.form')}}">
-                        <i class="icon icon-enter"></i>
-                        Sign In
-                    </a>
-                </li>
-            @endif
-        </ul>
-    </nav>
-</div>
+<nav class="nav">
+    <span class="nav-content">
+        @if(session()->has('user'))
+            <a href="{{route('home')}}" class="nav-link">
+                {{-- <span class="icon-hawk "><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span> --}}
+                <i class="icon icon-home3"></i>Home
+            </a>
+            <a href="{{route('show.food.form')}}" class="nav-link">Store</a>
+            {{-- <a href="{{route('show.paginated.food.record')}}" class="nav-link">Record</a> --}}
+            <a href="{{route('report.daily')}}">Daily Report</a>
+            <a href="{{route('report.calendar')}}" class="nav-link">Monthly Summary</a>
+            {{-- <a href="{{route('show.weekly.report')}}" class="nav-link">Report</a> --}}
+            <span class="nav-link nav-link-push-left">{{session("user")}}</span>
+            <a href="{{route('retrieve.account')}}" class="nav-link">Profile</a>
+            <a href="{{route('logout.user')}}" class="nav-link">
+                <i class="icon icon-exit"></i>
+                Log Out
+            </a>
+        @else
+            <a href="{{route('landing')}}" class="nav-link">
+                <span class="icon icon-hawk"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
+                Tracker
+            </a>
+            <a href="{{route('show.register.form')}}" class="nav-link nav-link-push-left"> Sign Up</a>
+            <a href="{{route('show.login.form')}}" class="nav-link"> <i class="icon icon-enter"></i>Sign In</a>
+
+
+        @endif
+    </span>
+</nav>

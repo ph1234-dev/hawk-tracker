@@ -1,13 +1,14 @@
 @extends('..template')
 
 @section('content')
-    <div 
-        class="component-container" 
-        style="display: flex; flex-direction: column; gap: 2rem; align-items: center; text-align: center">
-        <span class="text-giant-title-max">404</span>
-        <span class="text-hero-subtitle">PAGE NOT FOUND!</span>
-        <p>The page you were looking for could not be found.</p>
-        <button class="button-primary">GO TO HOME PAGE</button>
-        <span>&copy; 2019. All rights reserved</span>
-    </div>
+    <div class="container container-centered" >
+        <img style="margin-top: 2rem" src="{{url('svg/day52-autumn.svg')}}">
+        <span class="title-biggest">
+            Error <span class="highlight-warning">404</span>
+        </span>
+        <p class="title">
+            The page does not exist it seems.  
+        </p>
+        <button class="btn-primary" style="margin-top: 2rem">Go back home</button>
+     </div>
 @endsection

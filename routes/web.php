@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ApplicationDataController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\ReportController;
 
 
 /*
@@ -40,75 +41,61 @@ use App\Http\Controllers\FoodController;
 // php artisan migrate
 
 
-Route::get("home",[ApplicationDataController::class,'init'])->name("home");
+Route::get("home",[FoodController::class,'getRecordToday'])->name("home");
 
 Route::prefix("account")->group(function(){
 
-    Route::get('register',function(){
-        return view('account/register');
-    })->name('show.register.form');
+    Route::view('register','account/register')->name('show.register.form');
 
-    Route::get('login',function(){
-        return view("account/login");
-    })->name('show.login.form');
+    Route::view('login',"account/login")->name('show.login.form');
 
-    Route::post('register_success',[
-        AccountController::class,'create'
-        ])->name('create.user');
+    Route::post('success',[
+        AccountController::class,'createAccount'
+    ])->name('create.user');
     
     // login
-    Route::get('authenticate',[
-        AccountController::class,
-        'authenticate_user'
+    Route::get('signIn',[
+        AccountController::class,'signIn'
     ])->name("authenticate.user");
 
     // logout
-    Route::get('logout',function(){
-        if ( session()->has('user') ){
-            session()->pull('user');
-            session()->pull('user_id');
-            session()->pull('food_record');
+    Route::get('logOut',[
+        AccountController::class,'signOut'
+    ])->name("logout.user");
 
-            // destroys all sessions
-            session()->flush();
-        }
-        // redirect
-        // https://laravel.com/docs/9.x/redirects#redirecting-named-routes
-        return redirect()->route('show.login.form');
-    })->name("logout.user");
+    Route::get('details',[
+        AccountController::class,'getAccountInfo'
+    ])->name("retrieve.account");
 
-    Route::get('update',[
-        AccountController::class,
-        'retrieve_account'])->name("retrieve.account");
+    Route::post('update',[
+        AccountController::class,'updateAcount'
+    ])->name("update.account");
 
-    Route::post('update_account',[
-        AccountController::class,
-        'update'])->name("update.account");
-
-    Route::get('profile',[AccountController::class,'show_profile'])->name('show.profile');
+    Route::get('profile',[
+        AccountController::class,'getUserProfile'
+    ])->name('show.profile');
 });
 
 
-Route::get("record",[FoodController::class,'show'])->name("show.list.food");
+// Route::get("record",[FoodController::class,'show'])->name("show.list.food");
 
-Route::prefix("food")->group(function(){
+Route::prefix("record")->group(function(){
 
-    Route::get('form',function(){
-        return view("food/store");
-    })->name('show.food.form');
-    
-    Route::get('record',[FoodController::class,'show_entire_food_record'])->name('show.paginated.food.record');
-
-
-    Route::post('store',[
-        FoodController::class,
-        'store'])->name("store.food");
+    Route::view('add',"food/store")->name('show.food.form');
+   
+    Route::post('store',[   
+        FoodController::class,'storeInformation'
+    ])->name("store.food");
 
     // used to show update page
-    Route::get('update/food={id}',[FoodController::class,'show_food_update_page'])->name('show.food.update.page');
+    Route::get('update/food={id}',[
+        FoodController::class,'getFoodInformation'
+    ])->name('show.food.update.page');
    
     // used to update db
-    Route::post('update/food={id}',[FoodController::class,'update_food_record'])->name('update.food.record');
+    Route::post('update/food={id}',[
+        FoodController::class,'updateFoodInformation'
+    ])->name('update.food.record');
 });
 
 // always call php artisan if ading new routes.. howver optimze
@@ -131,15 +118,25 @@ Route::prefix("food")->group(function(){
 
 //https://dev.to/keikesu0122/a-simple-way-to-enable-cors-on-laravel-55i#:~:text=The%20simplest%20method%20to%20enable,%3Ahttps%3A%2F%2Fhogehoge.com%20.
 Route::middleware(['cors'])->group(function () {
-    Route::get('/check_username/:username',[
-        AccountController::class,
-        'check_username'
-    ]);
+    // Route::get('/check_username/:username',[
+    //     AccountController::class,
+    //     'check_username'
+    // ]);
+
+    Route::get('/fetch/report/daily/offset={offset}/increment={icrement}',[
+        ReportController::class,'getDailyPaginatedRecords'
+    ])->name('report.fetch.offsetNext');
+
+    Route::get('/fetch/report/calories/per/day/month={month}',[
+        ReportController::class,'getMonthlyDailyCalendarSummary'    
+    ])->name('report.fetch.monthly.daily.calendar');
 });
 
-Route::get('/',function(){
-    return view('landing_page');
-})->name('landing');
+// Route::get('/',function(){
+//     return view('landing_page');
+// })->name('landing');
+// alternative to route get that is commented above
+Route::view('/','landing_page')->name('landing');
 
 Route::fallback(function () {
     return view("/common/page404");
@@ -147,13 +144,16 @@ Route::fallback(function () {
 
 Route::get('delete_food/{data}',[FoodController::class,'delete'])->name('delete.stored.food');
 
-
 Route::prefix('report')->group(function(){
-    Route::get('/',[FoodController::class,'show_weekly_record'])->name('show.weekly.report');
-    Route::get('/date={date}',[FoodController::class,'show_weekly_record_specific_date'])->name('show.weekly.report.specific');
+    // Route::get('/',[FoodController::class,'getWeeklySummary'])->name('show.weekly.report');
+    Route::get('daily',[
+        ReportController::class,'getDailySummary'
+    ])->name('report.daily');
+    
+    Route::get('daily/{date}',[
+        ReportController::class,'getSpecificDateRecord'
+    ])->name('report.daily.specific');
 
-    Route::get('/daily-record={date}',[
-            FoodController::class,
-            'show_daily_specific_record'
-        ])->name('show.daily.specific.record');
+    Route::view('calendar',"reports/calendar")->name("report.calendar");
+        
 });

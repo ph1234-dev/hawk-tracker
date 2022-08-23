@@ -1,42 +1,49 @@
 @extends('template')
 
 @section('content')
-<div class="component-container">
-    {{-- id comes from the view since its passed from the controller --}}
-    <form action="{{route('update.food.record',$food_id)}}" class="form" method=post>
-        @csrf
-        {{-- dont forget csrf --}}
+    <div class="container">
+        <div class="container-form">
+            <div class="container-form-info">
+                <span class="title">Update Food</span>
+                <img class="form-svg" src="{{url('svg/day80-tea.svg')}}">
+            </div>
+                <form 
+                {{-- action="{{route('update.food.record',$food_id)}}"  --}}
+                class="form" 
+                method=post >
+                @csrf
+                
+                <span class="title">Details</span>
+                <small>Please write the new information below</small>
+                
+                <label for="" class="">Food</label>
+                <input type="text" name="food" id="" class="form-input" value="{{$food}}">
+                @error('food')
+                    <span>{{$message}}</span>
+                @enderror
 
-        <span class="form-title">Food update</span>
-        <small>
-            <span class="form-subtitle">Please write the new values</span>
-        </small>
+                <label for="" class="">Calories</label>
+                <input type="number" name="calories" id="" class="form-input" value="{{$calories}}" >
+                @error('calories')
+                    <span>{{$message}}</span>
+                @enderror
+
+                <label for="" class="">Pieces</label>
+                <input type="number" name="pieces" id="" class="form-input" value="{{$pieces}}"> 
+                @error('pieces')
+                    <span>{{$message}}</span>
+                @enderror
+                
+                <label for="" class="">Additional Info</label>
+                <textarea name="comment">{{$comment}}</textarea>
+                @error('comment')
+                    <span>{{$message}}</span>
+                @enderror 
+
+                <input type="submit" value="Update">
+            </form>
+        </div>
+        {{-- id comes from the view since its passed from the controller --}}
         
-        <label for="" class="form-label">Food</label>
-        <input type="text" name="food" id="" class="form-input" value="{{$food}}">
-        @error('food')
-            <span>{{$message}}</span>
-        @enderror
-
-        <label for="" class="form-label">Calories</label>
-        <input type="number" name="calories" id="" class="form-input" value="{{$calories}}" ">
-        @error('calories')
-            <span>{{$message}}</span>
-        @enderror
-
-        <label for="" class="form-label">Pieces</label>
-        <input type="number" name="pieces" id="" class="form-input" value="{{$pieces}}"" > 
-        @error('pieces')
-            <span>{{$message}}</span>
-        @enderror
-        
-        <label for="" class="form-label">Additional Info</label>
-        <textarea name="comment">{{$comment}}</textarea>
-        @error('comment')
-            <span>{{$message}}</span>
-        @enderror
-
-        <input class="form-submit" type="submit" value="Update">
-    </form>
-</div>
+    </div>
 @endsection

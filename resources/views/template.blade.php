@@ -13,30 +13,36 @@
     <link rel="stylesheet" href="{{ url('css/app.css') }}">
     <link rel="stylesheet" href="{{ url('css/media.css') }}">
     <link rel="stylesheet" href="{{ url('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ url('css/utility.css') }}">
     <link rel="stylesheet" href="{{ url('css/icomoon/style.css') }}">
-</head>
-<body>
+
     
-    @include("common/nav")
-    &nbsp;
+    @routes
+    @vite('/resources/js/app.js')
+    @vite([
+        'resources/scss/app.scss',
+        'resources/css/inter/inter.css',
+        'resources/css/app.css',
+        'resources/js/app.js'])
 
-        @if(Route::is('landing'))
-            <div class="root-content" >
-                @yield('content')  
-            </div>
-        @else
-            <div class="root-content" style="padding: var(--padding)">
-                @yield('content')   
-            </div>
-        @endif
+</head>
+<body >
 
-    &nbsp;
-    <div style="padding: var(--padding)">
-        @include("common/footer")
+    <div id="app" class="template" > 
+
+        <div class="template-header">
+            @include("common/nav")
+        </div>
+                    
+        <div class="template-body util-element-padding-large" >
+            @yield('content')  
+        </div>
+        <div class="template-footer">
+            @include("common/footer")
+        </div>
     </div>
 </body>
 
 </html>
-@routes
-<script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js' )}}"></script>
-<script type="text/javascript" src="{{ url('js/app.js' )}}"></script>
+{{-- <script type="text/javascript" src="{{ url('js/jquery-3.6.0.min.js' )}}"></script>
+<script type="text/javascript" src="{{ url('js/app.js' )}}"></script> --}}

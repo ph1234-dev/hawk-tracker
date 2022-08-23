@@ -77,3 +77,25 @@ $('#input-date-week-identifier').on('change',function(e){
 $('#landing-page-main-button').on('click',function(){
     document.location.href=route('show.login.form')
 })
+
+
+// $(window).on(' resize',function(){
+//     let header = $('#root-header').height()
+//     let footer = $('footer').height()
+//     // let windowSize = $(window).height()
+    
+//     // $('#root-content').height( document.height - (header+footer))
+//     // console.log(`Win [${windowSize}] Header [${header}] / content[${content}]`)
+// })
+
+// let resizeListener = function(){
+    
+//     let header = $('.navbar-container').height()
+//     let footer = $('.footer').height()
+//     // $('#root-content').height(screen.height-(header))
+//     $('#root-content').height($(window).height()-(header+footer))
+    
+//     // alert("tesat" +$(window).height()-(header) )
+// }
+// $(window).on('resize',resizeListener())
+// // $(document).ready(resizeListener());
