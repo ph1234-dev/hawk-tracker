@@ -1,98 +1,73 @@
 @extends('template')
-{{-- this means if null or the status was no tset --}}
-@if(!@isset($status))
-    @section('content')
 
-    {{-- how to perform erros --}}
-    {{-- https://laravel.com/docs/9.x/validation#introduction --}}
-
+@section('content')
+<div class="container">
+    <div class="container-form">
+        <div class="container-form-info">
+            <span class="title">New Account</span>
+            <img class="form-svg" src="{{url('svg/day69-dotted-notebook.svg')}}">
+        </div>
         <form 
             {{--turn auto complete off para mawala iyong mga annoying na saved data  --}}
-        autocomplete="off"
-            id="new-account-form"
-            class="form" 
-            style="margin: auto"
+            autocomplete="off"
             action=" {{route('create.user')}} " 
             method="post"
             >
-            @csrf
-            <span class="form-title">Create Account</span>
-            <small class="form-details"> It's free, but your data is our product</small>
+            @csrf {{-- do not forget to --}}
             
-            @if($errors->any())
-                {{-- {{$errors}} --}}
-                <span class="form-error">There are some errors in your form</span>
-            @endif
-
-            {{-- do not forget to add csrf --}}
-            <label class="form-label"  for="name">Name</label>
-            {{-- to retain value after validation failed.. you just need to sset
-                attribute value={{old('[name of the input placed]')}} --}}
+            <span class="title">Personal Details</span>   
+            <small>Please fill up the form below. </small>
+            @if($errors->any()) @endif
+             
+            <label class=""  for="name">Name</label>
             <input type="text" name="name" placeholder="" value="{{old('name')}}" >
             @error('name')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <label class="form-label" for="username">Username</label>
+            <label for="username">Username</label>
             <input id="reg-username" type="text" name="username" placeholder=""  value="{{old('username')}}" >
-            <span id="reg-username-warning" class="show-warning"></span>
             @error('username')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <label class="form-label"  for="password">Password  &nbsp;<i class="icon icon-lock"></i></label>
+            <label  for="password">Password  &nbsp;<i class="icon icon-lock"></i></label>
             <input id="reg-password" type="password" name="password" placeholder="" value="{{old('password')}}">
             @error('password')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <label class="form-label"  required>Confirm Password</label>
-            <input id="reg-confirm-password" type="password" name="password_confirmation" placeholder="">
-            <span id="password-confirmation"></span>
+            <label >Confirm Password</label>
+            <input type="password" name="password_confirmation" placeholder="">
             @error('password_confirmation')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
-               
-
-            <label class="form-label" for="" required>Daily Calories</label>
-            <input id="reg-calories" type="number" name="calories" placeholder="" value="{{old('calories')}}">
-            <span id=""></span>
+                
+            <label class="" for="" required>Daily Calories</label>
+            <input type="number" name="calories" placeholder="" value="{{old('calories')}}">
             @error('calories')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <div class="checkbox-container">
-                <input id="reg-agree" class="checkbox-container-checkbox" type="checkbox" name="agree" placeholder="">
-                <label class="checkbox-container-label" for="reg-agree">
+            <div class="container-checkbox">
+                <input id="cb-agree-terms" type="checkbox" name="agree" placeholder="">
+                <label class="checkbox-container-label" for="cb-agree-terms">
                     <small>
                         I certify that I am 18 years old and read and understand
                         data privacy.
                     </small> 
-                    <br>
                     @error('agree')
-                        <i class="form-error">{{$message}}</i>
+                        <span class="error">{{$message}}</span>
                     @enderror
                 </label>
             </div>
-            
-            <input id="reg-submit" type="submit" class="form-submit" value="Register">
-            &nbsp;
+                
+            <input 
+                type="submit"  
+                value="Register">
+                
         </form>
-    @endsection
-@else
-
-    @section('content')
-        <div class="component-container">
-            @if($status == "pass")     
-                <div class="component-container">
-                    <h1>Account has been created</h1>
-                    <span>you can now login to tracker</span>
-                    <a class="button" href="{{route('show.login.form')}}">Login Now</a>
-                </div>
-            @else
-                <h1>Problem occurred Creating account {{$status}}</h1>  
-            @endif
-        </div>
-    @endsection
-
-@endif
+    </div>
+</div>
+        
+@endsection

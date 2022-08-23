@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-    <div class="component-container">
+    <div class="container">
         <h2>Personal Information</h2>
         <table>
             <tbody>

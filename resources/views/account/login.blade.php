@@ -3,33 +3,45 @@
 
     {{-- @if()
     @endif --}}
-    <div class="component-container " >
+    <div class="container container-centered" >
+
+        <span class="icon-big icon-hawk"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span></span>
+        <span class="title" >
+            Tracker Login
+        </span>
+        <small class="">Already have an account? Sign in</small>
+        
         <form action="{{route('authenticate.user')}}" method="get" 
-            class="form"
-            style="margin:auto;">
+            class="form">
             @csrf
-            <span class="form-title">Login now!</span>
-            <small>
-                <p class="form-details">Don't have account yet? click <b><a href="{{route('show.register.form')}}">here</a></b> to register</p>
-            </small>
 
             @isset($error)
-                <span class="form-erro">{{$error}}</span>
+                <span class="error">{{$message}}</span>
             @endisset
 
-            <label class="form-label" for="username">Username</label>
-            <input class="form-input" type="text" name="username" placeholder="" value="{{old('username')}}">
+            <label class="" for="username">Username</label>
+            <input class="" type="text" name="username" placeholder="" value="{{old('username')}}">
             @error('username')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <label class="form-label" for="username">Password &nbsp;<i class="icon icon-lock"></i></label>
-            <input class="form-input" type="password" name="password" placeholder="" >
+            <label class="" for="username">Password &nbsp;<i class="icon icon-lock"></i></label>
+            <input class="" type="password" name="password" placeholder="" >
             @error('password')
-                <i class="form-error">{{$message}}</i>
+                <span class="error">{{$message}}</span>
             @enderror
 
-            <input class="form-submit" type="submit" style="Login">
+            <input class="" type="submit" value="Login">
+            
         </form>
+
+        <small class="">
+            <p class="">
+                Don't have account yet? click <b>
+                    <a href="{{route('show.register.form')}}">here</a></b>
+                    to Register
+            </p>
+        </small>
+        
     </div>
 @endsection
