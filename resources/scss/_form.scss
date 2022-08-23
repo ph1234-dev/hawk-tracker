@@ -1,0 +1,122 @@
+@use "variable";
+
+$padding: variable.$padding-top*4 variable.$padding-left ;
+
+.container-form{
+    padding: 0;
+    box-shadow: none;
+    form{
+        order: 2;
+        flex-grow: 1;
+        // width: 100%;
+        border: none;
+    }
+
+    .container-form-info{
+        display: none;
+        
+    }
+
+}
+
+form{
+    grid-area: form;
+    display: flex;
+    flex-direction: column;
+    padding: $padding;
+    gap: variable.$gap-vertical;
+    width: 100%;
+    // background-color: variable.$bg-whitest;
+    background-color: white;
+    @include draw-border;
+
+    .title{
+        color: $bg-primary;
+    }
+
+ 
+    textarea,
+    input{
+        width: 100%;
+        border-radius: variable.$border-radius;
+        padding: variable.$padding;
+        @include variable.draw-border;
+        background-color: variable.$bg-white;
+        
+        &[type="submit"]{
+            display: flex;
+            justify-content: center;
+            gap: variable.$padding-left;
+            background-color: variable.$bg-white;
+            @include variable.paint-primary;
+            width: 100%;
+            font-weight: 500;
+        }
+    }
+
+    label{
+        font-weight: 500;
+    }
+
+    .error{
+        color: variable.$bg-warning;
+        margin-bottom: variable.$margin-top;
+        font-size: smaller;
+    }
+
+}
+
+@media  only screen and (min-width: 321px) {
+
+   form{
+        max-width: 325px;
+   } 
+}
+
+@media screen and (min-width: 425px) {
+    
+    .container-form{
+
+        display: flex;
+        box-shadow:  0 0 5px #c1c1c190;
+        width: 100%;
+        border-radius: variable.$border-radius;
+        margin: auto;
+
+        .container-form-info{
+            display: flex;
+            flex-direction: column;
+            order: 1;
+            flex-grow: 1;
+            gap: variable.$gap-vertical;
+            border-radius:  variable.$border-radius 0 0 variable.$border-radius  !important;
+            padding: variable.$padding-top*4 variable.$padding-left * 2;
+            background-color: $bg-white;
+            // @include variable.paint-primary;
+
+            .form-svg{
+                margin: auto;
+                min-width: 100px;
+                box-sizing: content-box;
+            }
+        }
+
+        
+        form{
+            order: 2;
+            flex-grow: 1;
+            max-width: 425px;
+            border-radius: 0px variable.$border-radius variable.$border-radius 0 !important;
+            border: none;
+            padding:  variable.$padding-top*4 variable.$padding-left * 2;
+
+            input[type="submit"]{
+                width: fit-content !important;
+                margin-left: auto !important;
+            }
+
+            
+        }
+    }
+
+}

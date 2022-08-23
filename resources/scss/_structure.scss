@@ -1,0 +1,12 @@
+
+.template{
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: "head" "body" "footer";
+}
+
+/* template */
+.template-header{ grid-area: head;}
+.template-body{ grid-area: body; }
+.template-footer{ grid-area: footer;}

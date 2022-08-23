@@ -1,0 +1,101 @@
+@use "variable";
+
+.calendar{
+    height: auto;
+    // max-height: 500px;
+    box-shadow: 0px 0px 3px variable.$bg-white;
+
+    &-head{
+        display: none;
+
+        >*{
+            padding: variable.$padding;
+        }
+    }
+    &-body{
+        display: flex;
+        flex-direction: column;
+        height: inherit;
+        
+        >*{
+            padding: variable.$padding;
+            height: fit-content;
+            text-align: center;
+
+            &.calendar-extra-days{
+                display: none;
+            }
+    
+            &.calendar-current-day{
+                display: none;
+            }
+
+            .calendar-day{
+                font-weight: 700;
+                font-size: small;
+            }
+            
+            .calendar-info{
+                font-size: small;
+                font-weight: 500;
+                color: darken(variable.$bg-gray,30%);
+            }
+
+        }
+
+
+    }
+}
+
+@media screen and (min-width: 321px) {
+    
+    .calendar{
+        &-head{
+            display: grid;
+            background-color: variable.$bg-whitest;
+            font-weight: 600;
+            font-size: small;
+            grid-template-columns: repeat(7,1fr);
+            >*{
+                border: 1px solid variable.$bg-white;
+            }
+        }
+        &-body{
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            grid-template-rows: repeat(5,1fr);
+
+            >* {
+                border: 1px solid variable.$bg-white;
+                text-align: left;
+                min-height: 5rem;
+                
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                
+                &.calendar-extra-days{
+                    display: flex;
+                    flex-direction: column;
+                    background-color: variable.$bg-whiter;
+                    border: 1px solid variable.$bg-white;
+
+                    .calendar-day{
+                        color: darken(variable.$bg-gray,25%)
+                    }
+                }
+        
+                &.calendar-current-day{
+                    display: flex;
+                    flex-direction: column;
+                    border: currentColor;
+                    @include variable.paint-primary;
+                    
+                }
+                
+            }
+
+            
+        }
+    }
+}

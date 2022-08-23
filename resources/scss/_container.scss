@@ -1,0 +1,161 @@
+@use 'variable';
+
+$padding: variable.$padding-top*4 variable.$padding-left;
+$gap-vertical: variable.$gap-vertical *2;
+
+// container is block type
+// meaning its vertical
+.container{
+    max-width: 960px;
+    margin: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    gap: variable.$gap-vertical; 
+    padding: $padding;
+
+    &-centered{
+        // background-color: greenyellow;
+        align-items: center;
+    }
+
+    &-split-2{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: inherit;
+        justify-content: center;
+        gap: variable.$gap-vertical*2; 
+        align-items: baseline;
+        // -> this cause errors
+        > *{
+            max-width: 50%;
+            flex-grow: 1;
+        }
+    }
+
+    &-row{
+        flex-direction: column;
+
+        &.container-centered{
+            justify-content: center !important;   
+            gap: $gap-vertical;
+        }
+    }
+}
+
+
+
+// Difference with container is that container max width is 960
+// panel by default is justified centered
+// its similar to container but centered
+.panel{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: $padding;
+    text-align: center;
+    align-items: center;    
+
+  
+    &.panel-vertical{
+        display: flex;
+        flex-direction: column ;
+        gap: $gap-vertical ;
+        align-items: center;
+        justify-content: center;
+        padding: $padding;
+        align-items: center;
+
+        >:first-child{
+            margin-top: variable.$margin-top*2;
+        }
+
+        >:last-child{
+            margin-bottom: variable.$margin-top*2;
+        }
+    }
+
+}    
+
+// content block inside panels
+.block{
+    display: flex;
+    flex-direction: column;
+    // align-content: center;
+    // justify-content: center;
+    padding: variable.$padding;
+    gap: variable.$gap-vertical;
+    width: 100%;
+    min-width: 100px;
+    max-width: 400px;
+    // background-color: indigo;
+
+    >*{
+        text-align: center;
+        margin: auto;
+    }
+}
+
+
+@media screen and (min-width: 425px) {
+
+    .panel{
+        display: flex;
+        flex-direction: row;
+        gap: variable.$gap-horizontal; 
+        text-align: start;
+        justify-content: center;
+
+        >*{
+            width: fit-content;
+        }
+
+        &.panel-vertical{
+            flex-direction: column;
+        }
+
+        &.panel-justify-left{
+            justify-content: left !important;
+            background-color: transparent;
+        }
+        
+        &.panel-justify-right{
+            justify-content: right !important;
+            background-color: transparent;
+        }
+        
+        &.panel-default-padding{
+            padding: variable.$padding;
+        }
+
+
+        &.panel-align-items-center{
+            align-items: center;
+        }
+
+        &.panel-paddingless{
+            padding: 0 !important;
+        }
+
+        
+        &.panel-marginless{
+            padding: 0 !important;
+        }
+
+    }    
+
+    .container{
+
+        &-row{
+            flex-direction: row;
+    
+            &.container-centered{
+                justify-content: center !important;   
+                align-items: stretch;
+                gap: $gap-vertical * 4;
+            }
+        }
+    }
+
+}

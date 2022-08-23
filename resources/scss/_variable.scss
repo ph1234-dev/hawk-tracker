@@ -1,0 +1,64 @@
+
+// padding
+$padding-top: .66666667rem;
+$padding-left: .95rem; 
+$padding: $padding-top $padding-left;
+
+// margin
+$margin-top: $padding-top;
+$margin-left: $padding-left;
+
+$gap-vertical: $padding-top;
+$gap-horizontal: $padding-left;
+
+$bg-gray-darker: rgb(51, 52, 56);
+$bg-gray-dark: rgba(50, 49, 53,.7);
+$bg-gray: rgb(230, 230, 230);
+$bg-primary: rgb(37, 88, 255);
+$bg-accent: #ffdd93;
+$bg-warning: rgb(255, 93, 107);
+
+$bg-white: rgba(240,240,240,1);
+$bg-whiter:  rgba(248,248,248,1);
+$bg-whitest: rgba(252,252,252,1);
+
+$border-radius: 3px;
+
+
+@mixin draw-border{
+    border-radius: $border-radius;
+    border: 2px  solid darken($bg-white,3%);
+}   
+
+@mixin paint-primary {
+    background-color: $bg-primary;
+    color: rgba($bg-whitest,.8);
+    border: currentColor;
+
+    * {
+        color:currentColor;
+    }
+}
+
+
+@mixin paint-accent {
+    background-color: $bg-accent;
+    color: $bg-whitest;
+    border: currentColor;
+
+    * {
+        color:currentColor;
+    }
+}
+
+
+@mixin paint-nav{
+    background-color: rgb(32, 33, 41);
+    color: $bg-whiter; 
+    border: currentColor;
+
+    
+    * {
+        color:currentColor;
+    }
+}

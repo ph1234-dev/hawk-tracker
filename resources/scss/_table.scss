@@ -1,0 +1,127 @@
+@use 'variable';
+
+$radius: variable.$border-radius;
+// $radius: 10px;
+$box-shadow: 0 0 2px #c3c3c395;
+
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    caption{ display: block; padding: variable.$padding;}
+    
+    thead{ display: none; }
+
+    tbody{
+
+        tr{
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            td{
+                padding: variable.$padding;
+                text-align: center;
+            }
+
+            &:nth-of-type(even){
+                background-color: variable.$bg-white;
+            }
+
+            
+            &:nth-of-type(odd){
+                background-color: variable.$bg-whitest;
+            }
+        }    
+    }
+}
+
+@media screen and (min-width:426px){
+    table {
+        width: 100%;
+        background-color: variable.$bg-whitest;
+        box-shadow: $box-shadow;
+        border-radius: $radius; 
+        
+        caption{
+            display: none;
+        }
+
+
+        thead{
+            border-radius: $radius ;
+            background-color: variable.$bg-gray;
+            display: table-header-group;
+           
+            tr{
+
+                border-radius: $radius ;
+
+                th{  
+                    font-weight: 500;
+                    padding: variable.$padding;
+                    text-align: left;
+                    min-width: 10%;
+    
+                    &:first-of-type{
+                        border-radius: $radius 0 0 0;
+                    }
+
+                    &:last-of-type{
+                        border-radius: 0 $radius 0 0; 
+                    }
+                }
+
+
+            }
+
+        }
+
+        tbody{
+            border-radius: 0 0 $radius $radius;
+            tr{
+                display: table-row;
+                border-radius: 10px ;
+                td{
+                    padding: variable.$padding;  
+                    text-align: left;
+
+                    // needs be anchor
+                    &.td-centered{
+                        text-align: center;
+                        // justify-content: center;
+                        // > *{
+                        //     align-self: center;
+                        //     margin: auto;
+                        // }
+
+                        a{
+                            background-color: rgba(variable.$bg-primary,.7);
+                            padding: .5rem;
+                            line-height: 1rem;
+                            border-radius: variable.$border-radius;
+                        }
+                    }
+                }
+
+                &:nth-of-type(even){
+                    background-color: variable.$bg-whiter;
+                }
+
+                &:last-of-type{
+                    border-radius: 0 0 $radius $radius;
+                    
+                    td:last-of-type{
+                        border-radius: 0 0 $radius 0;
+                    }
+
+                    td:first-of-type{
+                        border-radius: 0 0 0 $radius ;
+                    }
+                }
+
+            }
+        }
+
+
+    }    
+}

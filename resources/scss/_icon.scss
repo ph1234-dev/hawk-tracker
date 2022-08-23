@@ -1,0 +1,41 @@
+@use "variable";
+
+
+.icon{
+    font-size: 1rem;
+    max-height: inherit;
+
+    &-big{
+        font-size: 200%;
+    }
+
+    &-bigger{
+        font-size: 300%;
+    }
+
+    
+    &-biggest{
+        font-size: 500%;
+    }
+}
+
+@media screen and (min-width: 321px) {
+ 
+    .icon{
+
+        &-big{
+            font-size: 300%;
+        }
+
+        
+        &-bigger{
+            font-size: 700%;
+        }
+
+        
+        &-biggest{
+            font-size: 1200%;
+        }
+    }
+
+}

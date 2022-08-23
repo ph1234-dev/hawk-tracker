@@ -1,0 +1,86 @@
+@use 'variable';
+@use 'sass:math';
+
+$width-max-nav: 960px;
+
+@mixin paint {
+    background-color: variable.$bg-white;
+    font-weight:    500;
+    color: variable.$bg-gray;
+    *{
+        color: variable.$bg-gray-dark;
+    }
+}
+// nav
+.nav{
+
+    i[class^="icon-"]{ display: none; }
+
+    .icon{
+        margin-right: calc(variable.$margin-left/2);
+    }
+
+    display: flex;
+    @include paint;
+    // padding: variable.$padding;
+
+    &-content{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: variable.$padding;
+        gap: variable.$gap-horizontal;
+    }
+
+    &-link{
+        &-push-left{
+            margin-left: 0;
+        }
+    }
+
+
+}
+
+
+@media screen and (min-width: 426px) {
+
+    .nav{
+        padding: variable.$padding;
+        [class^="icon"]{
+            display: inline-block;
+        }
+
+        .icon{
+            display: none;
+        }
+
+        &-content{
+            display: flex;
+            flex-direction: row;
+            gap: variable.$margin-left;
+            max-width: $width-max-nav;
+            margin: auto;
+        }
+
+        &-link{
+            
+            &-push-left{
+                margin-left: auto;
+            }
+        }
+    }
+}
+
+
+@media screen and (min-width: 721px) {
+    .nav{
+
+        [class^="icon"]{
+            display: inline-block;
+        }
+
+        .icon{
+            display: inline-block;
+        }
+    }
+}

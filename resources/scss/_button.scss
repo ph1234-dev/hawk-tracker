@@ -1,0 +1,64 @@
+@use "variable";
+
+.btn,
+button{
+    width: fit-content;
+    border-radius: variable.$border-radius;
+    padding: variable.$padding;
+    @include variable.draw-border;
+    background-color: variable.$bg-white;
+    display: flex;
+    align-items: center;
+    gap: variable.$padding-left;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: smaller;
+    &.btn-primary{
+        @include variable.paint-primary;
+    }
+
+    &.btn-accent{
+        @include variable.paint-accent;
+    }
+
+    &.btn-round{
+        border-radius: 3rem;
+    }
+
+    &.btn-scale-up{
+        padding: variable.$padding-top variable.$padding-left;
+        font-size: 1rem;
+    }
+
+    &:disabled{
+        opacity: .4;
+        cursor:auto;
+        background-color: variable.$bg-gray;
+        color: currentColor;
+    }
+
+}
+
+
+// display: inline-block;
+// outline: 0;
+// border: 0;
+// cursor: pointer;
+// background-color: #4299e1;
+// border-radius: 50px;
+// padding: 8px 16px;
+// font-size: 16px;
+// font-weight: 700;
+// color: white;
+// line-height: 26px;
+
+@media screen and (min-width: 425px) {
+        
+    .btn,
+    button{
+        &.btn-scale-up{
+            padding: variable.$padding-top*1.5 variable.$padding-left*1.5;
+            font-size: larger !important;
+        }
+    }
+}

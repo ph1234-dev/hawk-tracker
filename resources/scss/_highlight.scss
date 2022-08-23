@@ -1,0 +1,5 @@
+@use "variable";
+
+.highlight-warning{
+    color: variable.$bg-warning;
+}

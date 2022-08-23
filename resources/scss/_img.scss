@@ -1,0 +1,23 @@
+img{
+    width: inherit;
+    height: auto;
+}
+
+@media screen and (min-width: 425px) {
+    img{
+        max-width: 20%;   
+    }
+}
+
+@media screen and (min-width: 725px) {
+    img{
+        max-width: 30% ;   
+    }
+}
+
+
+@media screen and (min-width: 960px) {
+    img{
+        max-width: 50% ;   
+    }
+}

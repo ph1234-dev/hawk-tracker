@@ -1,0 +1,21 @@
+@use "variable";
+
+$max-width: 100px;
+// https://stackoverflow.com/questions/42290719/custom-styling-progress-bar-in-css
+
+
+.progressbar{
+    width: 100%;
+    max-width: $max-width;
+    display: flex;
+    height: 1rem;
+    background-color: variable.$bg-gray;
+    border-radius: variable.$border-radius;
+
+    &-indicator{
+        width: 20px;
+        height: inherit;
+        background-color: indigo;
+        border-radius: variable.$border-radius;
+    }
+}

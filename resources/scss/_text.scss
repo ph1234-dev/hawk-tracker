@@ -1,0 +1,10 @@
+@use "variable";
+
+.text-color-primary{
+    background-color: variable.$bg-primary;    
+}
+
+
+.text-color-accent{
+    background-color: variable.$bg-accent;    
+}

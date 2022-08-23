@@ -1,0 +1,44 @@
+
+.title{
+    font-size: 110%;   
+
+    &-big{
+        font-size: 120%;
+    }
+    
+    &-bigger{
+        font-size: 130%;
+    }
+
+    
+    &-biggest{
+        font-size: 140%;
+    }
+
+}
+
+@media screen and (min-width: 321px) {
+        
+    .title{
+        // font-weight: 500;
+        font-size: 150%;    
+
+        &-big{
+            // font-weight: 500;
+            font-size: 180%;
+        }
+        
+        &-bigger{
+            // font-weight: 500;
+            font-size: 240%;
+        }
+
+        
+        &-biggest{
+            // font-weight: 500;
+            font-size: 360%;
+        }
+
+    }
+
+}

@@ -1,0 +1,98 @@
+@use "variable";
+@use "sass:math";
+
+$triangle-height: 1rem;
+$bg-default: variable.$bg-gray;
+
+.actionbar{
+    display: flex;
+    flex-direction: column;
+    gap: variable.$gap-vertical;
+    padding: variable.$padding;
+    background-color: $bg-default;
+    // @include variable.draw-border;   
+    border-radius: variable.$border-radius;
+    justify-items: center;
+
+    &-info{
+        display: flex;
+        flex-direction: column;
+        // flex-shrink: 1;
+    }
+
+    &-action{
+        display: flex;
+        flex-direction: column;
+        color: variable.$bg-primary;
+
+        &.btn{
+            padding: 0 !important;
+            cursor: pointer !important;
+            background-color: transparent;
+        }
+    }
+
+    &::after{
+        display: none
+    };
+}
+
+
+@media screen and (min-width:426px){
+    
+    .actionbar{
+        flex-direction: row;
+        gap: variable.$gap-horizontal;
+        position: relative;
+        margin-bottom: variable.$margin-top;
+        // @include variable.paint-primary;
+
+        &-info{
+            flex-direction: row;
+            gap: variable.$gap-horizontal;
+            width: fit-content;
+
+            &:not(:last-of-type){
+            
+                &::after{
+
+                    display: inline-block;
+                    content: '/';
+                    padding-left: variable.$padding-left;
+                }
+            }
+        }
+
+        &-action{
+            flex-direction: row;
+            align-self: start;
+            
+            &:first-of-type{
+                margin-left: auto;
+            }
+            
+        }
+
+        &::after{
+            position:absolute;
+            left: 0;
+            margin-left: variable.$margin-left;
+            bottom: math.div($triangle-height,-1.75);
+            display: block;
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: $triangle-height solid $bg-default;
+            border-left: math.div($triangle-height,.95) solid transparent; 
+            border-right: math.div($triangle-height,.95) solid transparent;
+            z-index: -1;
+        }
+
+        &.no-arrow{
+            &::after{
+                display: none;
+            }
+        }
+
+    }
+}
