@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 // import this library.. otherwise you cant use 
 use Illuminate\Support\Facades\DB;
 
+use App\Events\UserLoginEvent;
+
 // for hasing password
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +17,7 @@ use Illuminate\Validation\Rule;
 class AccountController extends Controller
 {
     //
-    public function create(Request $request){
+    public function createAccount(Request $request){
 
         // built in function you only need to specify the content
         $request->validate([
@@ -53,35 +55,36 @@ class AccountController extends Controller
         
         $password = $request->input('password');
 
-        
         $calories = $request->input('calories');
-
-        $status = "pass";
-
-        // dd("iam herze");
-        if( DB::table('accounts')->where('username',$username)->exists()){
-            $status = "fail";
-        }else{
-            DB::insert("insert into accounts (username,name,password,target_calories)values (?,?,?,?)",
+        
+        // return Redirect::back()->withInput(Input::all());
+           
+        //DB::table('accounts')->where('username',$username)->exists()
+    
+        $status = DB::insert("
+                insert into accounts (username,name,password,target_calories) 
+                values (?,?,?,?)",
                     [
                         $username,
                         $name,
                         $password,
                         $calories
                     ]);
-
+        
+        if ( $status ){
             $user = DB::select("select id,name from accounts where username=?",[$username]);
             $res = $user[0];
-            // $request->session()->put('user',$res->name);
-            // $request->session()->put('user_id',$res->id);
+            return view("account/register_status");
+        }else{
+            return view("common/page404");
         }
+        
 
-        return view("account/register",['status'=>$status]);
    
     }
 
     // equivalent to login
-    public function authenticate_user(Request $request){
+    public function signIn(Request $request){
 
         // returns an $error on view
         $request->validate([
@@ -108,7 +111,7 @@ class AccountController extends Controller
 
         if($exist){
 
-            $user = DB::select("select id, name from accounts a 
+            $user = DB::select("select id, name, target_calories from accounts a 
                         where a.username=? and a.password=? ",
                           [$username,$password]);
 
@@ -120,7 +123,11 @@ class AccountController extends Controller
             // store as session
             $request->session()->put('user',$user->name);
             $request->session()->put('user_id',$user->id);
-        
+            
+            // event tutorial
+            // https://www.youtube.com/watch?v=aq2E1oaksag&ab_channel=CodeWithDary
+            event(new UserLoginEvent($user->name,$user->id));
+
             // load data
            
 
@@ -146,6 +153,17 @@ class AccountController extends Controller
 
         }
 
+    }
+
+    public function signOut(Request $request){
+        if ( session()->has('user') ){
+            session()->pull('user');
+            session()->pull('user_id');
+            session()->pull('food_record');
+            // destroys all sessions
+            session()->flush();
+        }
+        return redirect()->route('show.login.form');
     }
 
     public function check_username(Request $request){
@@ -176,7 +194,7 @@ class AccountController extends Controller
         return json_encode($username) ;
     }
 
-    public function update(Request $request){
+    public function updateAcount(Request $request){
         $request->validate([
             // 'name' => 'required',
             'username'=> 'sometimes',
@@ -201,7 +219,7 @@ class AccountController extends Controller
         ]);
     }
 
-    public function retrieve_account(Request $request){
+    public function getAccountInfo(Request $request){
         $id = $request->session()->get("user_id");
         $user = DB::select("select username,name,target_calories from accounts where id=?",[$id]);
         $res = $user[0];
@@ -215,7 +233,7 @@ class AccountController extends Controller
         // return "user id >> ".$id;
     }
 
-    public function show_profile(Request $request){
+    public function getUserProfile(Request $request){
         $id = $request->session()->get("user_id");
         $user = DB::select("select username,name,password from accounts where id=?",[$id]);
         $res = $user[0];

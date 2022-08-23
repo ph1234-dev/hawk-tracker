@@ -8,10 +8,56 @@ use Carbon\Carbon;
 
 class FoodController extends Controller
 {
-    private $starting_index = 0;
-    private $increment = 5;
+
+    public function getRecordToday(Request $request){
+        $user_id = $request->session()->get("user_id");
+        $date = Carbon::now()->format('F d, Y');
+
+        $food_record_result_set_summary = DB::select(
+                        "select 
+                        sum(f.calories) as total_calories ,
+                        count(f.food) as total_food
+                        from food_records f where f.user_id=? and f.date::date=now()::date" ,[$user_id]);
+        
+        $user_account_info = DB::select("select target_calories from accounts where id=?",[$user_id]);
+
+        // to show data
+        $food_record_info = $food_record_result_set_summary[0];
+
+        $user_info = $user_account_info[0];
+
+        $records = DB::select(
+            "
+                select * 
+                from food_records 
+                where user_id=? 
+                and date::date=now()::date
+                order by date desc
+            ",[$user_id]);
+        
+        $status = "good";
+        if ( $food_record_info->total_calories > $user_info->target_calories ){
+            $status = "you are eating too mucn";
+        }else{
+            $status = "Good you can still eat more";
+        }
+        // dd diedump to stop page from rendering
+        // dd($records);
+
+        return view("components/todays_record",[
+            'progress' => ($food_record_info->total_calories/$user_info->target_calories)*100,
+            'date' => $date,
+            'records' => $records,
+            'total_calories' => number_format($food_record_info->total_calories),
+            'total_food' =>number_format( $food_record_info->total_food),
+            'target_calories' => number_format($user_info->target_calories),
+        ]);
+
+    }
+
+
     //
-    public function store(Request $request){
+    public function storeInformation(Request $request){
 
         $request->validate([
             'food'=>'required',
@@ -26,12 +72,13 @@ class FoodController extends Controller
         $pieces =  $request->input("pieces");
 
         $user_id = $request->session()->get('user_id');
+        $target_calories = $request->session()->get('target_calories');
         $status = DB::insert("insert into food_records(user_id,food,calories,comment,pieces) values(?,?,?,?,?)",[
             $user_id,
             $food,
             $calories,
             $comment,
-            $pieces
+            $pieces,
         ]);
 
         $result_set = DB::select("select sum(calories) as total_calories from food_records 
@@ -56,49 +103,6 @@ class FoodController extends Controller
         ]);
     }
 
-   
-    // this shows the daily recods selected through the 
-    // date picker
-    public function show_daily_specific_record(Request $request, $date){
-      
-        $user_id = $request->session()->get("user_id");
-
-        $food_record_result_set_summary = DB::select(
-                        "select 
-                        sum(f.calories) as total_calories ,
-                        count(f.food) as total_food
-                        from food_records f where f.user_id=? and f.date::date=?" ,
-                        [$user_id,$date]);
-        
-        $user_account_info = DB::select("select target_calories from accounts where id=?",[$user_id]);
-
-        // dd or var_dump
-        // to show data
-        $food_record_info = $food_record_result_set_summary[0];
-        
-        $user_info = $user_account_info[0];
-
-
-        $records = DB::select(
-            "
-                select * 
-                from food_records 
-                where user_id=? 
-                and date::date=?
-                order by date desc
-            ",[$user_id,$date]);
-
-        // dd(Carbon::parse($date)->format('d F y'));
-        return view("food/show_date_selected_records",[
-            'records' => $records,
-            'total_calories' => number_format($food_record_info->total_calories),
-            'total_food' =>number_format( $food_record_info->total_food),
-            'target_calories' => number_format($user_info->target_calories),
-            'date' => Carbon::parse($date)->format('F d, Y')
-        ]);
-    }
-
-
     public function delete($data){
 
         DB::table('food_records')->where('id', $data)->delete();
@@ -108,9 +112,15 @@ class FoodController extends Controller
         // return 
     }
 
-    public function show_food_update_page($id){
-        $resultset = DB::select("select food, calories, pieces, comment from food_records
-                                     where id=?",[$id]);
+    public function getFoodInformation($id){
+        $resultset = DB::select("
+                    select 
+                        food, 
+                        calories, 
+                        pieces, 
+                        comment 
+                    from food_records
+                        where id=?",[$id]);
         
         $result = $resultset[0];
 
@@ -123,7 +133,7 @@ class FoodController extends Controller
         ]);
     }
 
-    public function update_food_record(Request $request, $id){
+    public function updateFoodInformation(Request $request, $id){
 
         $request->validate([
             'food'=>'sometimes',
@@ -146,53 +156,11 @@ class FoodController extends Controller
         ]);
 
 
-        // return "wtf";
         return redirect()->route('home');
     }
 
 
-    public function show_entire_food_record(Request $request){
-        
-        $user_id = $request->session()->get("user_id");
-        // $records = DB::select("select food, calories, pieces, comment,date from food_record 
-        //     where user_id =?",[$user_id])->paginate(4);
-        
-        $food_record_result_set_summary = DB::select(
-                        "select sum(f.calories) as total_calories ,
-                         count(f.food) as total_food
-                        from food_records f where f.user_id=? " ,[$user_id]);
-        
-        $user_account_info = DB::select("select target_calories from accounts where id=?",[$user_id]);
-
-        // dd or var_dump
-        // to show data
-        $food_record_info = $food_record_result_set_summary[0];
-        // $calorie_decoded = var_dump($calories);
-
-        $user_info = $user_account_info[0];
-
-        $records = DB::table("food_records")->where('user_id',$user_id)->paginate(5);
-        
-        $status = "good";
-        if ( $food_record_info->total_calories > $user_info->target_calories ){
-            $status = "you are eating too mucn";
-        }else{
-            $status = "Good you can still eat more";
-        }
-
-        // dd($records);
-
-        return view("components/paginated_food_record",[
-            'data' => 'testing',
-            'records' => $records,
-            'total_calories'=> number_format($food_record_info->total_calories),
-            'total_food' => number_format($food_record_info->total_food),
-            'target_calories' => number_format($user_info->target_calories),
-            'status' => $status
-        ]);
-    }
-
-    public function show_weekly_record(Request $request){
+    public function getWeeklySummary(Request $request){
         $user_id = $request->session()->get("user_id");
 
         $result_set = DB::select(
@@ -211,48 +179,9 @@ class FoodController extends Controller
                     [$user_id]);
         
 
-        // dd($result_set);
-        // if resultset no need to use $result_set[0]
-
-        // $fat = 3500-sum(clories);
-
         return view('components/weekly_record', [
             'records' => $result_set
         ]);
     }
-
-    
-    public function show_weekly_record_specific_date(
-        Request $request, 
-        $date){
-            dd($date); 
-
-        $user_id = $request->session()->get("user_id");
-        // $records = DB::table('food_records')->where('date', $date)->get();
-        $records = DB::select("
-            select * from food_records where date=?
-            and user_id=?",[$date,$user_id]);
-
-        $target_result_set = DB::select("
-        select  t.total_calories, a.target_calories
-        from (
-            select sum(calories) as total_calories
-            from food_records where user_id=?) t
-         join accounts a 
-         on a.id=?;
-                    ",[$user_id,$user_id]);
-
-        // user strval to convert num to string
-        $target_res = $target_result_set[0];
-
-        // dd($target_calories);
-        // return "Post delete data about to delete ".$data;
-        return view('components/weekly_specific_record',[
-            'records'=>$records, 
-            'target_calories'=> number_format($target_res->target_calories),
-            'total_calories' => number_format($target_res->total_calories)
-        ]);
-    }
-
 
 }
