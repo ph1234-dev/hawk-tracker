@@ -18,7 +18,6 @@
 
     
     @routes
-    @vite('/resources/js/app.js')
     @vite([
         'resources/scss/app.scss',
         'resources/css/inter/inter.css',
