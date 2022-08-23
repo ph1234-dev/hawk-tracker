@@ -2,8 +2,7 @@
 
 @section('content')
 
-<div class="component-container">
-
+<div class="container">
     <span class="text-title">Weekly Record</span>
     <span class="breadcrumb">
         <span class="breadcrumb-info">

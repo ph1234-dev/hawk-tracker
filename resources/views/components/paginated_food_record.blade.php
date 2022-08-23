@@ -1,37 +1,35 @@
 @extends("/template")
 
 @section("content")
-<div class="component-container" style="display: flex; flex-direction: column; gap: var(--padding-top)">
-    <span class="text-title">All Record</span>
-    <p>Here is what you have taken so far. Good Job!</p>
+<div class="container">
 
-    <span class="breadcrumb">
-        <span class="breadcrumb-info">
-            <span>Food consumed <span class="tag">{{$total_food}}</span> </span>
-            <span>Calories Consumed <span class="tag">{{$total_calories}}</span> </span> 
-            <span>Target Calories <span class="tag">{{$target_calories}}</span>  </span>
-        </span>
-        <span class="breadcrumb-actions">
-            <input id="input-date-week-identifier" type="date"  value="<?php echo date("Y-m-d"); ?>">
-            {{-- <span>
-                <a href="{{route('show.food.form')}}"><i class="icon icon-fire"></i>&nbsp;Go Home</a>
-            </span> --}}
-            <span class="breadcrumb-actions-icon-primary">
-                <a href="{{route('show.food.form')}}"><i class="icon icon-box-add"></i>&nbsp;Add More</a>
-            </span>
-        </span>
-    </span>
+    <span class="title-big">User Records</span>
+    <p>Here is what you have recorded today.</p>
+    {{-- <script>alert("wtf")</script> --}}
+    {{-- inject vue js component here --}}
+
+    <span class="actionbar">
+        {{-- <span>Summary <b>&#187;</b></span> <b>&#187;</b>  --}}
+        
+        <span class="actionbar-info">Consumed {{$total_calories}} cal</span>
+        <span class="actionbar-info">Target {{$target_calories}} cal</span>
+        <a class="actionbar-action" href="{{route('show.food.form')}}"> 
+            <b>+</b>&nbsp;Add Record
+        </a>
+    </span> 
 
     @isset($records)
         <table>
             <thead>
                 <tr>
-                    <th>Food</th>
-                    <th>Calorie </th>
-                    <th>Pieces</th>
-                    <th>Comments</th>
-                    <th>Date</th>
-                    <th>Options</th>
+                    <th width="20%">Food</th>
+                    <th width="15%">Calories</th>
+                    <th width="15%">Pieces</th>
+                    <th >Comments</th>
+                    <th width="20%" >Date</th>
+                    {{-- <th>Date</th> --}}
+                    <th width="5%">Delete</th>
+                    <th width="5%">Edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,13 +39,16 @@
                         <td>{{number_format($data->calories)}}</td>
                         <td>{{$data->pieces}}</td>
                         <td>{{$data->comment}}</td>
-                        <td>{{$data->date}}</td>
-                        <td>
-                            <span>
-                                <a href="{{route('delete.stored.food',$data->id)}}"><i class="icon-bin"></i>&nbsp;Delete</a>
-                                &nbsp;
-                                <a href="{{route('show.food.update.page',$data->id)}}"><i class="icon-pencil"></i>&nbsp;Update</a>
-                            </span>
+                        <td>{{ date('M d, Y', strtotime($data->date))}}</td>
+                        <td class="td-centered">
+                            <a class="action" href="{{route('delete.stored.food',$data->id)}}">
+                                <i class="icon  icon-bin"></i>
+                            </a>
+                        </td>
+                        <td class="td-centered">
+                            <a class="action" href="{{route('show.food.update.page',$data->id)}}">
+                                <i class="icon icon-pencil"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach

@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="component-container" >
+<div class="container" >
 
     {{-- error --}}
     @if(count($records) > 0)
